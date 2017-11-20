@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 
@@ -12,7 +13,8 @@ import { AudiobooksComponent } from './audiobooks/audiobooks.component';
     AudiobooksComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
