@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
 import { AudiobooksComponent } from './audiobooks/audiobooks.component';
+import { AudiobookService } from './audiobooks/shared/audiobook.service';
 
 
 @NgModule({
@@ -14,9 +15,9 @@ import { AudiobooksComponent } from './audiobooks/audiobooks.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    JsonpModule
   ],
-  providers: [],
+  providers: [AudiobookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
