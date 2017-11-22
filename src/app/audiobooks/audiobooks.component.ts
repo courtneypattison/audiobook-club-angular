@@ -11,6 +11,7 @@ import { Chapter } from './shared/chapter.model';
 })
 export class AudiobooksComponent implements OnInit {
   audiobooks: Audiobook[] = [];
+  selectedAudiobook: Audiobook;
 
 
   constructor(private audiobookService: AudiobookService) { }
@@ -65,12 +66,18 @@ export class AudiobooksComponent implements OnInit {
     });
   }
 
+  onSelect(audiobook: Audiobook) {
+    this.selectedAudiobook = audiobook;
+  }
+
+
   cleanDescription(description: string): string {
     return description.replace(/(<[^>]+>|\n\nFor further information,[^\n]+|\n\nFor more[^\n]+)/gi, '')
     .replace(/\n(Download )?M4B[^\n]+/gi, '\n\n')
     .replace(/\n\n+/, '')
     .trim();
   }
+
 
   cleanLength(length: string): string {
     const lengthSplit = length.split(':');
@@ -85,6 +92,7 @@ export class AudiobooksComponent implements OnInit {
       return 'Length unavailable';
     }
   }
+
 
   cleanSubjects(subjects: string): string {
     return subjects.replace(/(audio( ?books?)?|librivox);?/gi, '')

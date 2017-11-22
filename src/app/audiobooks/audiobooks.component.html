@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col" *ngFor="let audiobook of audiobooks">
+    <div class="col" *ngFor="let audiobook of audiobooks" (click)="onSelect(audiobook)">
         <div class="audiobook">
             <img src="{{audiobook.imageURL}}" width="130px" height="130px"/>
             <h2 class="h6">{{audiobook.title}}</h2>
@@ -7,3 +7,4 @@
         </div>
     </div>
 </div>
+<ac-audiobook-detail [audiobook]="selectedAudiobook"></ac-audiobook-detail>
