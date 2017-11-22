@@ -4,9 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 
-import { AUDIOBOOKS } from './mock-audiobooks';
-
-
 @Injectable()
 export class AudiobookService {
   private baseURL = 'https://archive.org/';
