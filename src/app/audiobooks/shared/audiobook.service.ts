@@ -13,7 +13,7 @@ export class AudiobookService {
 
 
   getAudiobookIdentifiers(): Observable<any> {
-    const AUDIOBOOKS_URL = this.baseURL
+    const audiobooksURL = this.baseURL
     + 'advancedsearch.php'
     + '?q=collection%3Alibrivoxaudio'
     + '&fl[]=identifier'
@@ -26,13 +26,13 @@ export class AudiobookService {
 
 
     return this.jsonp
-      .get(AUDIOBOOKS_URL)
+      .get(audiobooksURL)
       .map((response: any) => response);
   }
 
 
   getAudiobook(identifier: string): Observable<any> {
-    const AUDIOBOOK_URL = this.baseURL
+    const audiobookURL = this.baseURL
     + 'details/'
     + identifier
     + '&output=json'
@@ -40,7 +40,7 @@ export class AudiobookService {
 
 
     return this.jsonp
-      .get(AUDIOBOOK_URL)
+      .get(audiobookURL)
       .map((response: any) => response);
   }
 }
