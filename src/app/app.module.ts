@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AudiobooksComponent } from './audiobooks/audiobooks.component';
 import { AudiobookService } from './audiobooks/shared/audiobook.service';
 import { AudiobookDetailComponent } from './audiobooks/audiobook-detail/audiobook-detail.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { AudiobookDetailComponent } from './audiobooks/audiobook-detail/audioboo
   imports: [
     BrowserModule,
     JsonpModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [AudiobookService],
   bootstrap: [AppComponent]
