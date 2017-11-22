@@ -3,6 +3,9 @@ import { JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
 import { AppComponent } from './app.component';
 import { AudiobooksComponent } from './audiobooks/audiobooks.component';
 import { AudiobookService } from './audiobooks/shared/audiobook.service';
@@ -15,7 +18,8 @@ import { AudiobookService } from './audiobooks/shared/audiobook.service';
   ],
   imports: [
     BrowserModule,
-    JsonpModule
+    JsonpModule,
+    NgbModule.forRoot()
   ],
   providers: [AudiobookService],
   bootstrap: [AppComponent]
