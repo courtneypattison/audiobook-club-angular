@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { JsonpModule } from '@angular/http';
 
 import { AudiobooksComponent } from './audiobooks.component';
+import { AudiobookService } from './shared/audiobook.service';
 
 describe('AudiobooksComponent', () => {
   let component: AudiobooksComponent;
@@ -8,7 +12,12 @@ describe('AudiobooksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AudiobooksComponent ]
+      imports: [
+        JsonpModule,
+        RouterTestingModule
+      ],
+      declarations: [AudiobooksComponent],
+      providers: [AudiobookService]
     })
     .compileComponents();
   }));
