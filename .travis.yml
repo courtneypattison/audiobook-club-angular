@@ -1,34 +1,26 @@
+sudo: false
+dist: trusty
+
 language: node_js
-
 node_js:
-  - node
-
-env:
-  - DISPLAY=:99.0
+  - "8"
 
 addons:
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
+  chrome: stable
 
 cache:
   yarn: true
   directories:
-    - ./node_modules
-
-before_install:
-  - sh -e /etc/init.d/xvfb start
+    - node_modules
 
 install:
-  - yarn install
+  - yarn
 
 script:
-  - yarn run build -- --prod --aot
-  - yarn run lint
-  - yarn run test -- --single-run
-  - yarn run e2e
+  - yarn build -- --prod --aot
+  - yarn lint
+  - yarn test
+  - yarn e2e
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
