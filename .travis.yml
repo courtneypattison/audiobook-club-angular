@@ -28,7 +28,8 @@ before_script:
 
 script:
   - ng build --prod
-  - yarn run lint && yarn run test
+  - yarn run lint
+  - yarn run test --watch=false
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
