@@ -6,10 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
+    "test": "karma start --single-run --browsers ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "tests": "ng lint && ng test --watch=false && ng e2e"
+    "e2e": "yarn run protractor",
+    "tests": "yarn run lint && yarn run test && yarn run e2e"
   },
   "private": true,
   "dependencies": {
