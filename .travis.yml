@@ -23,14 +23,9 @@ before_install:
 install:
   - yarn install
 
-before_script:
-  - yarn global add -g firebase-tools
-
 script:
-  - ng build --prod
-  - yarn run lint
-  - yarn run test -- --watch=false
-  - yarn run e2e
+  - yarn run build -- --prod --aot
+  - yarn run tests
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
