@@ -25,7 +25,9 @@ install:
 
 script:
   - yarn run build -- --prod --aot
-  - yarn run tests
+  - yarn run lint
+  - yarn run test -- --watch=false
+  - yarn run e2e
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
