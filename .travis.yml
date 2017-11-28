@@ -4,9 +4,7 @@ node_js:
   - node
 
 env:
-  global:
-    - CHROME_BIN=/usr/bin/google-chrome
-    - DISPLAY=:99.0
+  - CHROME_BIN=/usr/bin/google-chrome DISPLAY=:99.0
 
 addons:
   apt:
