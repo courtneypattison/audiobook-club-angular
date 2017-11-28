@@ -26,7 +26,7 @@ install:
 script:
   - yarn run build -- --prod --aot
   - yarn run lint
-  - yarn run test -- --watch=false
+  - yarn run test -- --single-run
   - yarn run e2e
 
 after_success:
