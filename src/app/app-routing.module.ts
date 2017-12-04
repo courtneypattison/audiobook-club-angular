@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AudiobooksModule } from './audiobooks/audiobooks.module';
+
 import { AudiobooksComponent } from './audiobooks/audiobooks.component';
 import { AudiobookDetailComponent } from './audiobooks/audiobook-detail/audiobook-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/audiobooks', pathMatch: 'full' },
-  { path: 'audiobooks', component: AudiobooksComponent },
-  { path: 'detail/:identifier', component: AudiobookDetailComponent }
+  { path: '', redirectTo: 'audiobooks', pathMatch: 'full' }
 ];
 
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    AudiobooksModule,
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}
