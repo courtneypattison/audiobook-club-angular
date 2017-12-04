@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Audiobook } from '../shared/audiobook.model';
@@ -24,6 +25,15 @@ export class AudiobookDetailComponent implements OnInit {
   getAudiobook() {
     const identifier = this.route.snapshot.paramMap.get('identifier');
     this.audiobookService.getAudiobook(identifier)
-      .subscribe(audiobook => this.audiobook = audiobook);
+      .subscribe(audiobook => {
+        this.audiobook = audiobook;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('An error occurred:', err.error.message);
+        } else {
+          console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+        }
+      });
   }
 }
