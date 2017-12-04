@@ -19,7 +19,7 @@ export class AudiobookListComponent implements OnInit {
 
   getAudiobooks() {
     this.audiobookService.getAudiobookIdentifiers().subscribe(data => {
-      this.audiobooks = data._body.response.docs;
+      this.audiobooks = data.response.docs;
       for (let _i = 0; _i < this.audiobooks.length; _i++) {
         this.audiobookService
           .getAudiobook(this.audiobooks[_i].identifier)

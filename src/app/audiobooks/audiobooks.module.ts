@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JsonpModule } from '@angular/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AudiobooksRoutingModule } from './audiobooks-routing.module';
 
@@ -17,7 +17,8 @@ import { AudiobookListComponent } from './audiobook-list/audiobook-list.componen
   ],
   imports: [
     CommonModule,
-    JsonpModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
     AudiobooksRoutingModule
   ],
   providers: [ AudiobookService ]

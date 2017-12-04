@@ -1,12 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { JsonpModule } from '@angular/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AudiobookService } from './audiobook.service';
 
 describe('AudiobookService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [JsonpModule],
+      imports: [
+        HttpClientModule,
+        HttpClientJsonpModule,
+      ],
       providers: [AudiobookService]
     });
   });

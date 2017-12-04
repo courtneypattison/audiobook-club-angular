@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Jsonp } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/retry';
 
 import { Audiobook } from './audiobook.model';
 import { Chapter } from './chapter.model';
@@ -10,7 +12,7 @@ import { Chapter } from './chapter.model';
 export class AudiobookService {
   private baseURL = 'https://archive.org/';
 
-  constructor(private jsonp: Jsonp) { }
+  constructor(private http: HttpClient) { }
 
   getAudiobookIdentifiers(): Observable<any> {
     const audiobooksURL = this.baseURL
@@ -22,10 +24,11 @@ export class AudiobookService {
       + '&page=1'
       + '&output=json'
       + '&save=yes'
-      + '&callback=JSONP_CALLBACK';
+      + '&callback=callback';
 
-    return this.jsonp
-      .get(audiobooksURL)
+    return this.http
+      .jsonp(audiobooksURL, 'callback')
+      .retry(3)
       .map((response: any) => response);
   }
 
@@ -34,13 +37,14 @@ export class AudiobookService {
       + 'details/'
       + identifier
       + '&output=json'
-      + '&callback=JSONP_CALLBACK';
+      + '&callback=callback';
 
-    return this.jsonp
-      .get(audiobookURL)
+    return this.http
+      .jsonp(audiobookURL, 'callback')
+      .retry(3)
       .map((response: any) => {
         const audiobook = new Audiobook();
-        const { title, creator, description, subject, runtime } = response._body.metadata;
+        const { title, creator, description, subject, runtime } = response.metadata;
 
         audiobook.identifier = identifier;
         audiobook.title = title && title[0] ? title[0] : 'Unknown title';
@@ -49,22 +53,22 @@ export class AudiobookService {
         audiobook.subjects = subject && subject[0] ? this.cleanSubjects(subject[0]) : 'Subjects unavailable';
         audiobook.length = runtime ? this.cleanLength(runtime[0]) : 'Length unavailable';
 
-        if (response._body.reviews) {
-          const { info } = response._body.reviews;
+        if (response.reviews) {
+          const { info } = response.reviews;
 
           audiobook.rating = info.avg_rating ? info.avg_rating : '0.00';
         } else {
           audiobook.rating = '0.00';
         }
 
-        if (response._body.misc) {
-          const { image } = response._body.misc;
+        if (response.misc) {
+          const { image } = response.misc;
 
           audiobook.imageURL = image;
         }
 
-        if (response._body.files) {
-          const files = response._body.files;
+        if (response.files) {
+          const files = response.files;
           const chapters = [];
 
           for (const filename in files) {

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { JsonpModule } from '@angular/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AudiobookDetailComponent } from './audiobook-detail.component';
@@ -12,7 +12,8 @@ describe('AudiobookDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        JsonpModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
         RouterTestingModule
       ],
       declarations: [AudiobookDetailComponent],
