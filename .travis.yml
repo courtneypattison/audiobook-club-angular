@@ -15,6 +15,7 @@ cache:
 
 install:
   - yarn
+  - yarn webdriver-manager update
 
 script:
   - yarn build -- --prod --aot
