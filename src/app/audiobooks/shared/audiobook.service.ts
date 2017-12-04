@@ -28,8 +28,7 @@ export class AudiobookService {
 
     return this.http
       .jsonp(audiobooksURL, 'callback')
-      .retry(3)
-      .map((response: any) => response);
+      .retry(3);
   }
 
   getAudiobook(identifier: string): Observable<any> {
