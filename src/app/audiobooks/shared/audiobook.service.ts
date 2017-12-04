@@ -6,14 +6,11 @@ import 'rxjs/add/operator/map';
 import { Audiobook } from './audiobook.model';
 import { Chapter } from './chapter.model';
 
-
 @Injectable()
 export class AudiobookService {
   private baseURL = 'https://archive.org/';
 
-
   constructor(private jsonp: Jsonp) { }
-
 
   getAudiobookIdentifiers(): Observable<any> {
     const audiobooksURL = this.baseURL
@@ -27,12 +24,10 @@ export class AudiobookService {
       + '&save=yes'
       + '&callback=JSONP_CALLBACK';
 
-
     return this.jsonp
       .get(audiobooksURL)
       .map((response: any) => response);
   }
-
 
   getAudiobook(identifier: string): Observable<any> {
     const audiobookURL = this.baseURL
@@ -40,7 +35,6 @@ export class AudiobookService {
       + identifier
       + '&output=json'
       + '&callback=JSONP_CALLBACK';
-
 
     return this.jsonp
       .get(audiobookURL)
@@ -86,14 +80,12 @@ export class AudiobookService {
       });
   }
 
-
   cleanDescription(description: string): string {
     return description.replace(/(<[^>]+>|\n\nFor further information,[^\n]+|\n\nFor more[^\n]+)/gi, '')
       .replace(/\n(Download )?M4B[^\n]+/gi, '\n\n')
       .replace(/\n\n+/, '')
       .trim();
   }
-
 
   cleanLength(length: string): string {
     const lengthSplit = length.split(':');
@@ -108,7 +100,6 @@ export class AudiobookService {
       return 'Length unavailable';
     }
   }
-
 
   cleanSubjects(subjects: string): string {
     return subjects.replace(/(audio( ?books?)?|librivox);?/gi, '')
