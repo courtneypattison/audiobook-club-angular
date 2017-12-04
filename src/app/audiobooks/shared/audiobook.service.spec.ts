@@ -1,5 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AudiobookService } from './audiobook.service';
 
@@ -7,8 +7,7 @@ describe('AudiobookService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
-        HttpClientJsonpModule,
+        HttpClientTestingModule
       ],
       providers: [AudiobookService]
     });
