@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
-    "test": "karma start --single-run --browsers ChromeHeadless",
+    "build:prod:aot": "ng build -prod -aot",
+    "e2e": "ng e2e",
     "lint": "ng lint",
-    "e2e": "yarn run protractor",
-    "tests": "yarn run lint && yarn run test && yarn run e2e"
+    "test": "ng test",
+    "test:headless": "ng test --singleRun --browsers ChromeHeadless",
+    "start": "ng serve",
+    "webdriver:update": "yarn webdriver-manager update"
   },
   "private": true,
   "dependencies": {

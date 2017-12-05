@@ -13,10 +13,12 @@ cache:
 
 install:
   - yarn
-  - yarn webdriver-manager update
+
+before_script:
+  - yarn webdriver:update
 
 script:
-  - yarn build -- --prod --aot
+  - yarn build:prod:aot
   - yarn lint
   - yarn test
   - yarn e2e
