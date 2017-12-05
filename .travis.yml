@@ -20,7 +20,7 @@ before_script:
 script:
   - yarn build:prod:aot
   - yarn lint
-  - yarn test
+  - yarn test:headless
   - yarn e2e
 
 after_success:
