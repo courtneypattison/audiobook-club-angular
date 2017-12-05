@@ -1,3 +1,10 @@
-<p>
-  header works!
-</p>
+<header>
+    <div>
+      <h1>{{title}}</h1>
+    </div>
+    <nav class="nav">
+      <a *ngFor="let item of menuItems" class="nav-link" href="#">{{item}}</a>
+    </nav>
+    <br/>
+  </header>
+  

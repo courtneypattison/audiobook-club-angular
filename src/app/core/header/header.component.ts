@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  title = 'Audiobook Club';
+  menuItems = [
+    'Audiobooks'
+  ];
 
   constructor() { }
 
