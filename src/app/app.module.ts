@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 
+import { AudiobookService } from './audiobooks/shared/audiobook.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +18,7 @@ import { AppComponent } from './app.component';
     NgbModule.forRoot(),
     AppRoutingModule
   ],
+  providers: [AudiobookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
