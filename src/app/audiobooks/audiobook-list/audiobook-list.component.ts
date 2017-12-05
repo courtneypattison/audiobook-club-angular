@@ -19,13 +19,13 @@ export class AudiobookListComponent implements OnInit {
   }
 
   getAudiobooks() {
-    this.audiobookService.getAudiobookIdentifiers().subscribe(data => {
-      this.audiobooks = data.response.docs;
-      for (let _i = 0; _i < this.audiobooks.length; _i++) {
+    this.audiobookService.getAudiobookIdentifiers().subscribe(identifiers => {
+      this.audiobooks = identifiers;
+      for (let i = 0; i < this.audiobooks.length; i++) {
         this.audiobookService
-          .getAudiobook(this.audiobooks[_i].identifier)
-          .subscribe(audiobookDetail => {
-            this.audiobooks[_i] = audiobookDetail;
+          .getAudiobook(this.audiobooks[i].identifier)
+          .subscribe(audiobook => {
+            this.audiobooks[i] = audiobook;
           },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -34,6 +34,13 @@ export class AudiobookListComponent implements OnInit {
               console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
             }
           });
+      }
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log('An error occurred:', err.error.message);
+      } else {
+        console.log(`Backend returned code ${err.message}, body was: ${err.error}`);
       }
     });
   }
