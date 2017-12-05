@@ -10,12 +10,9 @@ addons:
 
 cache:
   yarn: true
-  directories:
-    - node_modules
 
 install:
   - yarn
-  - ./node_modules/protractor/bin/webdriver-manager update
 
 script:
   - yarn build -- --prod --aot
