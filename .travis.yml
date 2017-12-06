@@ -4,9 +4,6 @@
 # addons:
 #   chrome: stable
 
-# install:
-#   - yarn
-
 # before_script:
 #   - yarn webdriver:update
 
@@ -36,12 +33,15 @@ branches:
   only:
     - master
 
+install:
+  - yarn run install
+
 before_script:
-  - npm install -g firebase-tools
-  - npm install -g @angular/cli
+  - yarn global add firebase-tools
+  - yarn global add @angular/cli
 
 script:
-  - ng build --prod
+  - yarn run prod:build
 
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
