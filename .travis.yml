@@ -26,6 +26,9 @@ script:
 after_success:
   - firebase deploy --token $FIREBASE_TOKEN
 
+deploy:
+  skip_cleanup: true
+
 notifications:
   email:
     on_failure: change
