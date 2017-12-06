@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "ng build",
-    "build:prod": "ng build --prod --progress=false --progress=false",
+    "build:prod": "ng build --prod --progress=false",
     "build:prod:aot": "ng build --prod --aot",
     "e2e": "ng e2e --delete-output-path=false ",
     "lint": "ng lint",
