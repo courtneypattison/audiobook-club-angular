@@ -26,25 +26,20 @@ node_js:
 
 cache:
   yarn: true
-  directories:
-    - node_modules
+  directories: node_modules
 
 branches:
-  only:
-    - master
+  only: master
 
-install:
-  - yarn install
+install: yarn install
 
 before_script:
   - yarn global add firebase-tools
   - yarn global add @angular/cli
 
-script:
-  - yarn run prod:build
+script: yarn run build:prod
 
-after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
+after_success: firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
   email:
