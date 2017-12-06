@@ -34,7 +34,7 @@ branches:
     - master
 
 install:
-  - yarn run install
+  - yarn install
 
 before_script:
   - yarn global add firebase-tools
