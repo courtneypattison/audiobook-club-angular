@@ -8,13 +8,14 @@ cache:
   yarn: true
   directories: node_modules
 
-before_script: yarn run webdriver:update
+before_script: yarn webdriver:update
 
 script:
-  - yarn run build:prod
-  - yarn run lint
-  - yarn run test:headless
-  - yarn run e2e
+  - yarn build:prod
+  - yarn lint
+  - yarn test:headless
+  - yarn e2e
+  - cat coverage/lcov.info | yarn coveralls
 
 deploy:
   skip_cleanup: true
