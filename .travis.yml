@@ -16,13 +16,13 @@ branches:
 
 install: yarn install
 
-# before_script: yarn run webdriver:update
+before_script: yarn run webdriver:update
 
 script:
   - yarn run build:prod
   - yarn run lint
   - yarn run test:headless
-  # - yarn run e2e
+  - yarn run e2e
 
 deploy:
   skip_cleanup: true
