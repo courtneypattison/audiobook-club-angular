@@ -4,8 +4,8 @@
 language: node_js
 node_js: "8"
 
-# addons:
-#   chrome: stable
+addons:
+  chrome: stable
 
 cache:
   yarn: true
@@ -21,7 +21,7 @@ install: yarn install
 script:
   - yarn run build:prod
   - yarn run lint
-  # - yarn run test:headless
+  - yarn run test:headless
   # - yarn run e2e
 
 deploy:
