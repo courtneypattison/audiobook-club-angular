@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/courtneypattison/audiobook-club-angular.svg?branch=master)](https://travis-ci.org/courtneypattison/audiobook-club-angular)
+[![Build Status](https://travis-ci.org/courtneypattison/audiobook-club-angular.svg?branch=master)](https://travis-ci.org/courtneypattison/audiobook-club-angular) [![Coverage Status](https://coveralls.io/repos/github/courtneypattison/audiobook-club-angular/badge.svg?branch=master)](https://coveralls.io/github/courtneypattison/audiobook-club-angular?branch=master)
 
 # AudiobookClubAngular
 
