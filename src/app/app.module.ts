@@ -11,14 +11,14 @@ import { AppComponent } from './app.component';
 import { AudiobookService } from './audiobooks/shared/audiobook.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     CoreModule,
     AppRoutingModule
+  ],
+  declarations: [
+    AppComponent
   ],
   providers: [AudiobookService],
   bootstrap: [AppComponent]

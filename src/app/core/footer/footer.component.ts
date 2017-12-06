@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+  creator = 'Courtney Pattison';
+  date = Date.now();
+  licenseURL = 'https://github.com/courtneypattison/audiobook-club-angular/blob/master/LICENSE';
 
   constructor() { }
 
