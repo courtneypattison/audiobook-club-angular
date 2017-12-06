@@ -1,36 +1,56 @@
-sudo: false
-dist: trusty
+# sudo: false
+# dist: trusty
 
+# language: node_js
+# node_js:
+#   - "8"
+
+# addons:
+#   chrome: stable
+
+# cache:
+#   yarn: true
+
+# install:
+#   - yarn
+
+# before_script:
+#   - yarn webdriver:update
+
+# script:
+#   - yarn build:prod
+#   - yarn lint
+#   - yarn test:headless
+#   - yarn e2e
+
+# deploy:
+#   skip_cleanup: true
+#   provider: firebase
+#   token:
+#     secure: $FIREBASE_TOKEN
+#   project: "audiobook-club"
+
+# notifications:
+#   email:
+#     on_failure: change
+#     on_success: change
 language: node_js
 node_js:
-  - "8"
+  - "6.9"
 
-addons:
-  chrome: stable
-
-cache:
-  yarn: true
-
-install:
-  - yarn global add firebase-tools
-  - yarn global add @angular/cli
-  - yarn
+branches:
+  only:
+    - master
 
 before_script:
-  - yarn webdriver:update
+  - npm install -g firebase-tools
+  - npm install -g @angular/cli
 
 script:
-  - yarn build:prod
-  - yarn lint
-  - yarn test:headless
-  - yarn e2e
+  - ng build --prod
 
-deploy:
-  skip_cleanup: true
-  provider: firebase
-  token:
-    secure: $FIREBASE_TOKEN
-  project: "audiobook-club"
+after_success:
+  - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
   email:
