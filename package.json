@@ -9,7 +9,7 @@
     "e2e": "yarn protractor",
     "lint": "tslint \"src/**/*.ts\" && tslint \"e2e/**/*.ts\"",
     "test": "karma start",
-    "test:headless": "karma start --single-run --browsers ChromeHeadless",
+    "test:headless": "karma start --single-run --browsers ChromeHeadless --log-level=error",
     "start": "ng serve",
     "webdriver:update": "yarn webdriver-manager update"
   },
