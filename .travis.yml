@@ -1,10 +1,6 @@
 # sudo: false
 # dist: trusty
 
-# language: node_js
-# node_js:
-#   - "8"
-
 # addons:
 #   chrome: stable
 
@@ -30,13 +26,9 @@
 #     secure: $FIREBASE_TOKEN
 #   project: "audiobook-club"
 
-# notifications:
-#   email:
-#     on_failure: change
-#     on_success: change
 language: node_js
 node_js:
-  - "6.9"
+  - "8"
 
 branches:
   only:
