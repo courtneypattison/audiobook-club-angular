@@ -18,7 +18,7 @@ before_script:
   - yarn webdriver:update
 
 script:
-  - yarn build:prod:aot
+  - yarn build:prod
   - yarn lint
   - yarn test:headless
   - yarn e2e
