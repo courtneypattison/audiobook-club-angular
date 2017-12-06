@@ -23,10 +23,11 @@ script:
   - yarn test:headless
   - yarn e2e
 
-after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
-
 deploy:
+  provider: firebase
+  token:
+    secure: $FIREBASE_TOKEN
+  project: "audiobook-club"
   skip_cleanup: true
 
 notifications:
