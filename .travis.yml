@@ -1,19 +1,11 @@
 # sudo: false
 # dist: trusty
 
-# addons:
-#   chrome: stable
-
-# before_script:
-#   - yarn webdriver:update
-
-# script:
-#   - yarn lint
-#   - yarn test:headless
-#   - yarn e2e
-
 language: node_js
 node_js: "8"
+
+addons:
+  chrome: stable
 
 cache:
   yarn: true
@@ -24,7 +16,13 @@ branches:
 
 install: yarn install
 
-script: yarn run build:prod
+before_script: yarn run webdriver:update
+
+script:
+  - yarn run build:prod
+  - yarn run lint
+  - yarn run test:headless
+  - yarn run e2e
 
 deploy:
   skip_cleanup: true
