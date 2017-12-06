@@ -33,10 +33,6 @@ branches:
 
 install: yarn install
 
-before_script:
-  - yarn global add firebase-tools
-  - yarn global add @angular/cli
-
 script: yarn run build:prod
 
 after_success: firebase deploy --token $FIREBASE_TOKEN
