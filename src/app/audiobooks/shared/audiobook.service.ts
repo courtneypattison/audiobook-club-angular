@@ -14,7 +14,7 @@ export class AudiobookService {
 
   constructor(private http: HttpClient) { }
 
-  getAudiobookIdentifiers(): Observable<any> {
+  getAudiobooks(): Observable<Audiobook[]> {
     const audiobooksURL = this.baseURL
       + 'advancedsearch.php'
       + '?q=collection%3Alibrivoxaudio'
@@ -29,13 +29,22 @@ export class AudiobookService {
     return this.http
       .jsonp(audiobooksURL, 'callback')
       .retry(3)
-      .map((json: any) => json.response.docs);
+      .map((json: any) => {
+        const audiobooks: Audiobook[] = [];
+        const identifiers = json.response.docs;
+
+        for (let i = 0; i < identifiers.length; i++) {
+          audiobooks[i] = new Audiobook(identifiers[i].identifier);
+        }
+
+        return audiobooks;
+      });
   }
 
-  getAudiobook(identifier: string): Observable<any> {
+  getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
     const audiobookURL = this.baseURL
       + 'details/'
-      + identifier
+      + audiobook.identifier
       + '&output=json'
       + '&callback=callback';
 
@@ -43,10 +52,8 @@ export class AudiobookService {
       .jsonp(audiobookURL, 'callback')
       .retry(3)
       .map((response: any) => {
-        const audiobook = new Audiobook();
         const { title, creator, description, subject, runtime } = response.metadata;
 
-        audiobook.identifier = identifier;
         audiobook.title = title && title[0] ? title[0] : 'Unknown title';
         audiobook.authors = creator ? creator : 'Unknown author(s)';
         audiobook.description = description && description[0] ? this.cleanDescription(description[0]) : 'Description unavailable';
@@ -64,7 +71,7 @@ export class AudiobookService {
         if (response.misc) {
           const { image } = response.misc;
 
-          audiobook.imageURL = image;
+          audiobook.imageUrl = image;
         }
 
         if (response.files) {

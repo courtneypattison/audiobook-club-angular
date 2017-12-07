@@ -24,7 +24,7 @@ export class AudiobookDetailComponent implements OnInit {
 
   getAudiobook() {
     const identifier = this.route.snapshot.paramMap.get('identifier');
-    this.audiobookService.getAudiobook(identifier)
+    this.audiobookService.getAudiobookDetails(new Audiobook(identifier))
       .subscribe(audiobook => {
         this.audiobook = audiobook;
       },

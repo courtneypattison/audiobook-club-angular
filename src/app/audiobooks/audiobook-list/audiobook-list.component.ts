@@ -19,11 +19,11 @@ export class AudiobookListComponent implements OnInit {
   }
 
   getAudiobooks() {
-    this.audiobookService.getAudiobookIdentifiers().subscribe(identifiers => {
-      this.audiobooks = identifiers;
+    this.audiobookService.getAudiobooks().subscribe(audiobooks => {
+      this.audiobooks = audiobooks;
       for (let i = 0; i < this.audiobooks.length; i++) {
         this.audiobookService
-          .getAudiobook(this.audiobooks[i].identifier)
+          .getAudiobookDetails(this.audiobooks[i])
           .subscribe(audiobook => {
             this.audiobooks[i] = audiobook;
           },
