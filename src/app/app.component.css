@@ -1,12 +1,19 @@
-html {
-  position: relative;
-  min-height: 100%;
-}
-  
+/* Sticky Footer */
+
 body {
-  margin-bottom: 60px;
+  display: flex;
+  margin: 0;
+}
+
+.wrapper {
+  flex: 1 1 auto;
+  flex-flow: column nowrap;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .container {
+  flex: 1 0 auto;
   padding-top: 60px;
 }
