@@ -3,7 +3,7 @@ import { Chapter } from './chapter.model';
 export class Audiobook {
   identifier: string;
   title?: string;
-  authors?: string[];
+  author?: string;
   description?: string;
   subjects?: string;
   length?: string;
@@ -14,7 +14,7 @@ export class Audiobook {
     constructor(
       identifier: string,
       title?: string,
-      authors?: string[],
+      author?: string,
       description?: string,
       subjects?: string,
       length?: string,
@@ -24,7 +24,7 @@ export class Audiobook {
     ) {
       this.identifier = identifier;
       this.title = title;
-      this.authors = authors;
+      this.author = author;
       this.description = description;
       this.subjects = subjects;
       this.length = length;
