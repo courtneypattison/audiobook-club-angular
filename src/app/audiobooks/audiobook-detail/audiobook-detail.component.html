@@ -1,10 +1,10 @@
 <div *ngIf="audiobook">
-    <img src="{{audiobook.imageUrl}}" width="130px" height="130px"/>
+    <img src="{{audiobook.imageUrl}}"/>
     <h1>{{audiobook.title}}</h1>
-    <h2>{{audiobook.author}}</h2>
-    <h3>{{audiobook.subjects}}</h3>
-    <h4>{{audiobook.length}}</h4>
-    <h5>{{audiobook.rating}}</h5>
+    <p>{{audiobook.author}}</p>
+    <p>{{audiobook.subjects}}</p>
+    <p>{{audiobook.length}}</p>
+    <p>{{audiobook.rating}}</p>
     <p>{{audiobook.description}}</p>
     <ul *ngFor="let chapter of audiobook.chapters">
         <li><a href="https://archive.org/download/{{audiobook.identifier}}/{{chapter.filename}}">{{chapter.title}} {{chapter.length}}</a></li>
