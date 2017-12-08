@@ -14,8 +14,8 @@ export class AudiobookService {
 
   constructor(private http: HttpClient) { }
 
-  getAudiobooks(): Observable<Audiobook[]> {
-    const audiobooksURL = this.baseURL
+  getAudiobooksUrl(): string {
+    return this.baseURL
       + 'advancedsearch.php'
       + '?q=collection%3Alibrivoxaudio'
       + '&fl[]=identifier'
@@ -25,9 +25,11 @@ export class AudiobookService {
       + '&output=json'
       + '&save=yes'
       + '&callback=callback';
+  }
 
+  getAudiobooks(): Observable<Audiobook[]> {
     return this.http
-      .jsonp(audiobooksURL, 'callback')
+      .jsonp(this.getAudiobooksUrl(), 'callback')
       .retry(3)
       .map((json: any) => {
         const audiobooks: Audiobook[] = [];
@@ -41,15 +43,17 @@ export class AudiobookService {
       });
   }
 
-  getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
-    const audiobookURL = this.baseURL
+  getAudiobookDetailsUrl(identifier: string): string {
+    return this.baseURL
       + 'details/'
-      + audiobook.identifier
+      + identifier
       + '&output=json'
       + '&callback=callback';
+  }
 
+  getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
     return this.http
-      .jsonp(audiobookURL, 'callback')
+      .jsonp(this.getAudiobookDetailsUrl(audiobook.identifier), 'callback')
       .retry(3)
       .map((response: any) => {
         const { title, creator, description, subject, runtime } = response.metadata;
