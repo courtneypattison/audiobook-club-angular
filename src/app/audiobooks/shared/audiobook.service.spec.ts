@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { Audiobook } from './audiobook.model';
 import { AudiobookService } from './audiobook.service';
+import { mockIdentifiers, mockAudiobookDetails } from './mock-audiobooks';
 
 describe('AudiobookService', () => {
   let audiobookService: AudiobookService;
@@ -30,26 +31,31 @@ describe('AudiobookService', () => {
 
   describe('#getAudiobooks', () => {
     it('should return an Observable<Audiobook[]>', () => {
-      const dummyIdentifiers = {
-        'response': {
-          'docs': [
-            {'identifier': 'tom_sawyer_librivox'},
-            {'identifier': 'moby_dick_librivox'},
-            {'identifier': 'adventures_holmes'},
-            {'identifier': 'alice_in_wonderland_librivox'},
-            {'identifier': 'art_of_war_librivox'}
-          ]
-        }
-      };
-
       audiobookService.getAudiobooks().subscribe(audiobooks => {
         expect(audiobooks.length).toBe(5);
-        expect(audiobooks[0].identifier).toEqual(dummyIdentifiers['response']['docs'][0]['identifier']);
+        expect(audiobooks[0].identifier).toEqual(mockIdentifiers['response']['docs'][0]['identifier']);
       });
 
       const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobooksUrl());
       expect(req.request.method).toBe('JSONP');
-      req.flush(dummyIdentifiers);
+      req.flush(mockIdentifiers);
+    });
+  });
+
+  describe('#getAudiobookDetails', () => {
+    it('should return an Observable<Audiobook>', () => {
+      const identifier = mockAudiobookDetails['metadata']['identifier'][0];
+      const audiobook = new Audiobook(identifier);
+
+      audiobookService.getAudiobookDetails(audiobook).subscribe(audiobookDetails => {
+        expect(audiobookDetails.identifier).toEqual(identifier);
+      });
+
+      const audiobookDetailsUrl = audiobookService.getAudiobookDetailsUrl(identifier);
+      console.log(audiobookDetailsUrl);
+      const req = httpMock.expectOne(request => request.url === audiobookDetailsUrl);
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookDetails);
     });
   });
 });
