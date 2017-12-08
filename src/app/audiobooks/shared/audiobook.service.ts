@@ -14,7 +14,7 @@ export class AudiobookService {
 
   constructor(private http: HttpClient) { }
 
-  // URL Getters
+  // Get URLs
 
   getAudiobooksUrl(): string {
     return this.baseURL
@@ -22,7 +22,7 @@ export class AudiobookService {
       + '?q=collection%3Alibrivoxaudio'
       + '&fl[]=identifier'
       + '&sort[]=downloads+desc'
-      + '&rows=5'
+      + '&rows=10'
       + '&page=1'
       + '&output=json'
       + '&save=yes'
@@ -112,7 +112,7 @@ export class AudiobookService {
     if (misc) {
       const { image } = misc;
 
-      return image;
+      return image.replace('_thumb', '');
     }
     return 'https://cdn.pixabay.com/photo/2017/04/30/18/33/cat-2273598_1280.jpg';
   }

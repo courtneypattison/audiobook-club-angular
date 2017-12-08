@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col" *ngFor="let audiobook of audiobooks" routerLink="/detail/{{audiobook.identifier}}">
-      <div class="audiobook">
-          <img src="{{audiobook.imageUrl}}" width="130px" height="130px"/>
-          <h2 class="h6">{{audiobook.title}}</h2>
-          <h3 class="h6"><small class="text-muted">{{audiobook.author}}</small></h3>
-      </div>
+  <div class="audiobook col col-6 col-sm-4 col-md-3 col-lg-2" *ngFor="let audiobook of audiobooks" routerLink="/detail/{{audiobook.identifier}}">
+    <img src="{{audiobook.imageUrl}}"
+          class="img-fluid rounded"
+          title="{{audiobook.title}} by {{audiobook.author}}"
+          width="200px"
+          height="200px"/>
   </div>
 </div>
