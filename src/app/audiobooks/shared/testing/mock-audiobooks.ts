@@ -10,6 +10,58 @@ export const mockIdentifiers = {
     }
   };
 
+export const mockAudiobookShortLength = {
+  'metadata': {
+    'identifier': [
+      'tom_sawyer_librivox'
+    ],
+    'runtime': [
+      '46:12'
+    ]
+  }
+};
+
+export const mockAudiobookNanLength = {
+  'metadata': {
+    'identifier': [
+      'tom_sawyer_librivox'
+    ],
+    'runtime': [
+      'not runtime'
+    ]
+  }
+};
+
+export const mockAudiobookLongLength = {
+  'metadata': {
+    'identifier': [
+      'tom_sawyer_librivox'
+    ],
+    'runtime': [
+      '10:20:30:40'
+    ]
+  }
+};
+
+export const mockAudiobookWithoutDetails = {
+  'metadata': {
+    'identifier': [
+      'tom_sawyer_librivox'
+    ]
+  }
+};
+
+export const mockAudiobookWithoutRating = {
+  'metadata': {
+    'identifier': [
+      'tom_sawyer_librivox'
+    ]
+  },
+  'reviews': {
+    'info': { }
+  }
+};
+
 export const mockAudiobookDetails = {
     'metadata': {
       'identifier': [

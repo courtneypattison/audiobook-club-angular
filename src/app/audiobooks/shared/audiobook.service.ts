@@ -101,7 +101,7 @@ export class AudiobookService {
     if (reviews) {
       const { info } = reviews;
 
-      if (info.avg_rating) {
+      if (info && info.avg_rating) {
         return info.avg_rating;
       }
     }
@@ -144,6 +144,12 @@ export class AudiobookService {
 
   cleanLength(length: string): string {
     const lengthSplit = length.split(':');
+
+    for (const time of lengthSplit) {
+      if (!Number(time)) {
+        return 'Length unavailable';
+      }
+    }
 
     if (lengthSplit.length === 3) {
       return lengthSplit[0] + 'h ' + lengthSplit[1] + 'm';

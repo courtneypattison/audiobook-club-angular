@@ -4,7 +4,16 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { Audiobook } from './audiobook.model';
 import { AudiobookService } from './audiobook.service';
-import { mockIdentifiers, mockAudiobookDetails } from './mock-audiobooks';
+import {
+  mockIdentifiers,
+  mockAudiobookDetails,
+  mockAudiobookWithoutDetails,
+  mockAudiobookShortLength,
+  mockAudiobookNanLength,
+  mockAudiobookLongLength,
+  mockAudiobookWithoutRating
+} from './testing/mock-audiobooks';
+import { flushJsonpRequest } from './testing/flush-request';
 
 describe('AudiobookService', () => {
   let audiobookService: AudiobookService;
@@ -36,26 +45,70 @@ describe('AudiobookService', () => {
         expect(audiobooks[0].identifier).toEqual(mockIdentifiers['response']['docs'][0]['identifier']);
       });
 
-      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobooksUrl());
-      expect(req.request.method).toBe('JSONP');
-      req.flush(mockIdentifiers);
+      flushJsonpRequest(httpMock, audiobookService.getAudiobooksUrl(), mockIdentifiers);
     });
   });
 
   describe('#getAudiobookDetails', () => {
     it('should return an Observable<Audiobook>', () => {
       const identifier = mockAudiobookDetails['metadata']['identifier'][0];
-      const audiobook = new Audiobook(identifier);
 
-      audiobookService.getAudiobookDetails(audiobook).subscribe(audiobookDetails => {
-        expect(audiobookDetails.identifier).toEqual(identifier);
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.identifier).toEqual(identifier);
       });
 
-      const audiobookDetailsUrl = audiobookService.getAudiobookDetailsUrl(identifier);
-      console.log(audiobookDetailsUrl);
-      const req = httpMock.expectOne(request => request.url === audiobookDetailsUrl);
-      expect(req.request.method).toBe('JSONP');
-      req.flush(mockAudiobookDetails);
+      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookDetails);
+    });
+
+    it('should return an Observable<Audiobook> without details', () => {
+      const identifier = mockAudiobookWithoutDetails['metadata']['identifier'][0];
+
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.author).toEqual('Unknown author(s)');
+        expect(audiobook.length).toEqual('Length unavailable');
+      });
+
+      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookWithoutDetails);
+    });
+
+    it('should return an Observable<Audiobook> with short length', () => {
+      const identifier = mockAudiobookShortLength['metadata']['identifier'][0];
+
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.length).toEqual('46m 12s');
+      });
+
+      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookShortLength);
+    });
+
+    it('should return an Observable<Audiobook> with unavailable length due to string as length', () => {
+      const identifier = mockAudiobookNanLength['metadata']['identifier'][0];
+
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.length).toEqual('Length unavailable');
+      });
+
+      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookNanLength);
+    });
+
+    it('should return an Observable<Audiobook> with unavailable length due to long length', () => {
+      const identifier = mockAudiobookLongLength['metadata']['identifier'][0];
+
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.length).toEqual('Length unavailable');
+      });
+
+      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookLongLength);
+    });
+
+    it('should return an Observable<Audiobook> with rating as 0.00', () => {
+      const identifier = mockAudiobookWithoutRating['metadata']['identifier'][0];
+
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.rating).toEqual('0.00');
+      });
+
+      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookWithoutRating);
     });
   });
 });
