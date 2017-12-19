@@ -27,7 +27,7 @@ describe('AudiobookListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create audiobook list', () => {
     expect(component).toBeTruthy();
   });
 });

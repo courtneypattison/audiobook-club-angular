@@ -27,7 +27,7 @@ describe('AudiobookDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create audiobook detail', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -21,7 +21,7 @@ describe('AudiobooksComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create audiobooks', () => {
     expect(component).toBeTruthy();
   });
 });
