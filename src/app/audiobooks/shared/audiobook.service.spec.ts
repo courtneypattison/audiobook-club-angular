@@ -13,7 +13,6 @@ import {
   mockAudiobookLongLength,
   mockAudiobookWithoutRating
 } from './testing/mock-audiobooks';
-import { flushJsonpRequest } from './testing/flush-request';
 
 describe('AudiobookService', () => {
   let audiobookService: AudiobookService;
@@ -45,7 +44,9 @@ describe('AudiobookService', () => {
         expect(audiobooks[0].identifier).toEqual(mockIdentifiers['response']['docs'][0]['identifier']);
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobooksUrl(), mockIdentifiers);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobooksUrl());
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockIdentifiers);
     });
   });
 
@@ -57,7 +58,9 @@ describe('AudiobookService', () => {
         expect(audiobook.identifier).toEqual(identifier);
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookDetails);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookDetails);
     });
 
     it('should return an Observable<Audiobook> without details', () => {
@@ -68,7 +71,9 @@ describe('AudiobookService', () => {
         expect(audiobook.length).toEqual('Length unavailable');
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookWithoutDetails);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookWithoutDetails);
     });
 
     it('should return an Observable<Audiobook> with short length', () => {
@@ -78,7 +83,9 @@ describe('AudiobookService', () => {
         expect(audiobook.length).toEqual('46m 12s');
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookShortLength);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookShortLength);
     });
 
     it('should return an Observable<Audiobook> with unavailable length due to string as length', () => {
@@ -88,7 +95,9 @@ describe('AudiobookService', () => {
         expect(audiobook.length).toEqual('Length unavailable');
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookNanLength);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookNanLength);
     });
 
     it('should return an Observable<Audiobook> with unavailable length due to long length', () => {
@@ -98,7 +107,9 @@ describe('AudiobookService', () => {
         expect(audiobook.length).toEqual('Length unavailable');
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookLongLength);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookLongLength);
     });
 
     it('should return an Observable<Audiobook> with rating as 0.00', () => {
@@ -108,7 +119,9 @@ describe('AudiobookService', () => {
         expect(audiobook.rating).toEqual('0.00');
       });
 
-      flushJsonpRequest(httpMock, audiobookService.getAudiobookDetailsUrl(identifier), mockAudiobookWithoutRating);
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      expect(req.request.method).toBe('JSONP');
+      req.flush(mockAudiobookWithoutRating);
     });
   });
 });
