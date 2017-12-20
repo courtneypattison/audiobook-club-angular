@@ -4,6 +4,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { Audiobook } from './audiobook.model';
 import { AudiobookService } from './audiobook.service';
+import { LoggerService } from '../../core/logger.service';
+import { MockLoggerService } from '../../../testing/logger.service';
 import {
   mockIdentifiers,
   mockAudiobookDetails,
@@ -12,7 +14,7 @@ import {
   mockAudiobookNanLength,
   mockAudiobookLongLength,
   mockAudiobookWithoutRating
-} from './testing/mock-audiobooks';
+} from '../../../testing/mock-audiobooks';
 
 describe('AudiobookService', () => {
   let audiobookService: AudiobookService;
@@ -25,7 +27,8 @@ describe('AudiobookService', () => {
       ],
       providers: [
         AudiobookService,
-        { provide: JsonpClientBackend, useExisting: HttpBackend }
+        { provide: JsonpClientBackend, useExisting: HttpBackend },
+        { provide: LoggerService, useClass: MockLoggerService }
       ]
     });
 

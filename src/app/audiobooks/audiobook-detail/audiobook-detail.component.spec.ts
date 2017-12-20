@@ -4,6 +4,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AudiobookDetailComponent } from './audiobook-detail.component';
 import { AudiobookService } from '../shared/audiobook.service';
+import { LoggerService } from '../../core/logger.service';
+import { MockLoggerService } from '../../../testing/logger.service';
 
 describe('AudiobookDetailComponent', () => {
   let component: AudiobookDetailComponent;
@@ -16,7 +18,10 @@ describe('AudiobookDetailComponent', () => {
         RouterTestingModule
       ],
       declarations: [AudiobookDetailComponent],
-      providers: [AudiobookService]
+      providers: [
+        AudiobookService,
+        { provide: LoggerService, useClass: MockLoggerService }
+      ]
     })
     .compileComponents();
   }));

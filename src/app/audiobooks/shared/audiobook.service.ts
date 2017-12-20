@@ -7,12 +7,13 @@ import 'rxjs/add/operator/retry';
 
 import { Audiobook } from './audiobook.model';
 import { Chapter } from './chapter.model';
+import { LoggerService } from '../../core/logger.service';
 
 @Injectable()
 export class AudiobookService {
   private baseURL = 'https://archive.org/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private logger: LoggerService) { }
 
   // Get URLs
 
@@ -40,8 +41,11 @@ export class AudiobookService {
   // HTTP Requests
 
   getAudiobooks(): Observable<Audiobook[]> {
+    const audiobooksUrl = this.getAudiobooksUrl();
+
+    this.logger.log('Getting audiobooks from', audiobooksUrl);
     return this.http
-      .jsonp(this.getAudiobooksUrl(), 'callback')
+      .jsonp(audiobooksUrl, 'callback')
       .retry(3)
       .map((json: any) => {
         const audiobooks: Audiobook[] = [];
@@ -56,8 +60,11 @@ export class AudiobookService {
   }
 
   getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
+    const audiobookUrl = this.getAudiobookDetailsUrl(audiobook.identifier);
+
+    this.logger.log('Getting audiobook details from', audiobookUrl);
     return this.http
-      .jsonp(this.getAudiobookDetailsUrl(audiobook.identifier), 'callback')
+      .jsonp(audiobookUrl, 'callback')
       .retry(3)
       .map((response: any) => {
         const { title, creator, description, subject, runtime } = response.metadata;

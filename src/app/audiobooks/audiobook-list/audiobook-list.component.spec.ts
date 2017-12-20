@@ -4,6 +4,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AudiobookListComponent } from './audiobook-list.component';
 import { AudiobookService } from '../shared/audiobook.service';
+import { LoggerService } from '../../core/logger.service';
+import { MockLoggerService } from '../../../testing/logger.service';
 
 describe('AudiobookListComponent', () => {
   let component: AudiobookListComponent;
@@ -16,7 +18,10 @@ describe('AudiobookListComponent', () => {
         RouterTestingModule
       ],
       declarations: [AudiobookListComponent],
-      providers: [AudiobookService]
+      providers: [
+        AudiobookService,
+        { provide: LoggerService, useClass: MockLoggerService }
+      ]
     })
     .compileComponents();
   }));
