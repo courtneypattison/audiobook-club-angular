@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent {
   creator = 'Courtney Pattison';
-  currentYear = new Date().getUTCFullYear();
+  currentYear = 2017;
   licenseURL = 'https://github.com/courtneypattison/audiobook-club-angular/blob/master/LICENSE';
   licenseName = 'MIT';
 }
