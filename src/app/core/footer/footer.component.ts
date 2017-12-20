@@ -5,14 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   creator = 'Courtney Pattison';
-  date = Date.now();
+  currentYear = new Date().getUTCFullYear();
   licenseURL = 'https://github.com/courtneypattison/audiobook-club-angular/blob/master/LICENSE';
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  licenseName = 'MIT';
 }
