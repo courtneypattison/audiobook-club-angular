@@ -1,13 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/retry';
 
 import { Audiobook } from './audiobook.model';
 import { Chapter } from './chapter.model';
-import { LoggerService } from '../../core/logger.service';
+import { LoggerService } from '../../core/logger/logger.service';
+
+export const httpErrorIdentifier = 'http-error';
+export const httpErrorContents = `
+  <h1 class="no-toc">Request for audiobook failed.</h1>
+  <p>
+    We are unable to retrieve the audiobooks at this time.
+    Please check your connection and try again later.
+  </p>
+`;
 
 @Injectable()
 export class AudiobookService {
@@ -46,7 +57,6 @@ export class AudiobookService {
     this.logger.log('Getting audiobooks from', audiobooksUrl);
     return this.http
       .jsonp(audiobooksUrl, 'callback')
-      .retry(3)
       .map((json: any) => {
         const audiobooks: Audiobook[] = [];
         const identifiers = json.response.docs;
@@ -56,7 +66,8 @@ export class AudiobookService {
         }
 
         return audiobooks;
-      });
+      })
+      .catch((error: HttpErrorResponse) => of([this.handleHttpError(error)]));
   }
 
   getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
@@ -65,7 +76,6 @@ export class AudiobookService {
     this.logger.log('Getting audiobook details from', audiobookUrl);
     return this.http
       .jsonp(audiobookUrl, 'callback')
-      .retry(3)
       .map((response: any) => {
         const { title, creator, description, subject, runtime } = response.metadata;
 
@@ -79,32 +89,45 @@ export class AudiobookService {
         audiobook.chapters = this.getChapters(response.files);
 
         return audiobook;
-      });
+      })
+      .catch((error: HttpErrorResponse) => of(this.handleHttpError(error)));
+  }
+
+  // Error Handling
+
+  private handleHttpError(error: HttpErrorResponse): Audiobook {
+    if (error.error instanceof Error) {
+      this.logger.error('An error occurred:', error.error.message);
+    } else {
+      this.logger.error(`Backend returned code ${error.status}, body was: ${error.message}`);
+    }
+
+    return new Audiobook(httpErrorIdentifier);
   }
 
   // JSON Parsers
 
-  getTitle(title: string[]): string {
+  private getTitle(title: string[]): string {
     return title && title[0] ? title[0] : 'Unknown title';
   }
 
-  getAuthor(creator: string[]): string {
+  private getAuthor(creator: string[]): string {
     return creator && creator[0] ? creator[0] : 'Unknown author(s)';
   }
 
-  getDescription(description: string[]): string {
+  private getDescription(description: string[]): string {
     return description && description[0] ? this.cleanDescription(description[0]) : 'Description unavailable';
   }
 
-  getSubjects(subject: string[]): string {
+  private getSubjects(subject: string[]): string {
     return subject && subject[0] ? this.cleanSubjects(subject[0]) : 'Subjects unavailable';
   }
 
-  getLength(runtime: string): string {
+  private getLength(runtime: string): string {
     return runtime ? this.cleanLength(runtime[0]) : 'Length unavailable';
   }
 
-  getRating(reviews: any): string {
+  private getRating(reviews: any): string {
     if (reviews) {
       const { info } = reviews;
 
@@ -115,7 +138,7 @@ export class AudiobookService {
     return '0.00';
   }
 
-  getImageUrl(misc: any): string {
+  private getImageUrl(misc: any): string {
     if (misc) {
       const { image } = misc;
 
@@ -124,7 +147,7 @@ export class AudiobookService {
     return 'https://cdn.pixabay.com/photo/2017/04/30/18/33/cat-2273598_1280.jpg';
   }
 
-  getChapters(files: any): Chapter[] {
+  private getChapters(files: any): Chapter[] {
     const chapters = [];
 
     if (files) {
@@ -142,14 +165,14 @@ export class AudiobookService {
 
   // String cleaners
 
-  cleanDescription(description: string): string {
+  private cleanDescription(description: string): string {
     return description.replace(/(<[^>]+>|\n\nFor further information,[^\n]+|\n\nFor more[^\n]+)/gi, '')
       .replace(/\n(Download )?M4B[^\n]+/gi, '\n\n')
       .replace(/\n\n+/, '')
       .trim();
   }
 
-  cleanLength(length: string): string {
+  private cleanLength(length: string): string {
     const lengthSplit = length.split(':');
 
     for (const time of lengthSplit) {
@@ -169,7 +192,7 @@ export class AudiobookService {
     }
   }
 
-  cleanSubjects(subjects: string): string {
+  private cleanSubjects(subjects: string): string {
     return subjects.replace(/(audio( ?books?)?|librivox);?/gi, '')
       .replace(/; */gi, ', ')
       .trim()

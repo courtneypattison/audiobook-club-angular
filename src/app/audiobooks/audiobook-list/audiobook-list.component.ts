@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 
 import { Audiobook } from '../shared/audiobook.model';
-import { AudiobookService } from '../shared/audiobook.service';
+import { AudiobookService, httpErrorIdentifier, httpErrorContents } from '../shared/audiobook.service';
 
 @Component({
   selector: 'ac-audiobook-list',
@@ -11,6 +10,7 @@ import { AudiobookService } from '../shared/audiobook.service';
 })
 export class AudiobookListComponent implements OnInit {
   audiobooks: Audiobook[] = [];
+  httpError = false;
 
   constructor(private audiobookService: AudiobookService) { }
 
@@ -21,26 +21,21 @@ export class AudiobookListComponent implements OnInit {
   getAudiobooks() {
     this.audiobookService.getAudiobooks().subscribe(audiobooks => {
       this.audiobooks = audiobooks;
+      if (this.audiobooks[0].identifier === httpErrorIdentifier) {
+        this.httpError = true;
+        return;
+      }
+
       for (let i = 0; i < this.audiobooks.length; i++) {
         this.audiobookService
           .getAudiobookDetails(this.audiobooks[i])
           .subscribe(audiobook => {
-            this.audiobooks[i] = audiobook;
-          },
-          (err: HttpErrorResponse) => {
-            if (err.error instanceof Error) {
-              console.log('An error occurred:', err.error.message);
+            if (audiobook.identifier === httpErrorIdentifier) {
+              this.httpError = true;
             } else {
-              console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+              this.audiobooks[i] = audiobook;
             }
           });
-      }
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        console.log('An error occurred:', err.error.message);
-      } else {
-        console.log(`Backend returned code ${err.message}, body was: ${err.error}`);
       }
     });
   }

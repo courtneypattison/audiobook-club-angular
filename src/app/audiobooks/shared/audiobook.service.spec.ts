@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { Audiobook } from './audiobook.model';
 import { AudiobookService } from './audiobook.service';
-import { LoggerService } from '../../core/logger.service';
+import { LoggerService } from '../../core/logger/logger.service';
 import { MockLoggerService } from '../../../testing/logger.service';
 import {
   mockIdentifiers,

@@ -1,4 +1,4 @@
-<div *ngIf="audiobook">
+<div *ngIf="audiobook" *ngIf="!httpError">
     <img src="{{audiobook.imageUrl}}"/>
     <h1>{{audiobook.title}}</h1>
     <p>{{audiobook.author}}</p>
