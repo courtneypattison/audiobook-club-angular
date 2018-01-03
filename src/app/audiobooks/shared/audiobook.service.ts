@@ -12,13 +12,6 @@ import { Chapter } from './chapter.model';
 import { LoggerService } from '../../core/logger/logger.service';
 
 export const httpErrorIdentifier = 'http-error';
-export const httpErrorContents = `
-  <h1 class="no-toc">Request for audiobook failed.</h1>
-  <p>
-    We are unable to retrieve the audiobooks at this time.
-    Please check your connection and try again later.
-  </p>
-`;
 
 @Injectable()
 export class AudiobookService {
@@ -96,11 +89,7 @@ export class AudiobookService {
   // Error Handling
 
   private handleHttpError(error: HttpErrorResponse): Audiobook {
-    if (error.error instanceof Error) {
-      this.logger.error('An error occurred:', error.error.message);
-    } else {
-      this.logger.error(`Backend returned code ${error.status}, body was: ${error.message}`);
-    }
+    this.logger.error(`Backend returned code ${error.status}, body was: ${error.message}`);
 
     return new Audiobook(httpErrorIdentifier);
   }

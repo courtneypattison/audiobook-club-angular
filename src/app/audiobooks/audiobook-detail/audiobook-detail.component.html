@@ -1,4 +1,4 @@
-<div *ngIf="audiobook" *ngIf="!httpError">
+<div *ngIf="audiobook && !httpError">
     <img src="{{audiobook.imageUrl}}"/>
     <h1>{{audiobook.title}}</h1>
     <p>{{audiobook.author}}</p>
@@ -10,3 +10,4 @@
         <li><a href="https://archive.org/download/{{audiobook.identifier}}/{{chapter.filename}}">{{chapter.title}} {{chapter.length}}</a></li>
     </ul>
 </div>
+<ac-audiobook-http-error *ngIf="httpError"></ac-audiobook-http-error>

@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Audiobook } from '../shared/audiobook.model';
-import { AudiobookService, httpErrorIdentifier, httpErrorContents } from '../shared/audiobook.service';
+import { AudiobookService, httpErrorIdentifier } from '../shared/audiobook.service';
 
 @Component({
   selector: 'ac-audiobook-detail',

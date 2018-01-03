@@ -3,8 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AudiobookListComponent } from './audiobook-list.component';
+import { AudiobookHttpErrorComponent } from '../audiobook-http-error/audiobook-http-error.component';
+
 import { AudiobookService } from '../shared/audiobook.service';
-import { LoggerService } from '../../core/logger.service';
+import { LoggerService } from '../../core/logger/logger.service';
 import { MockLoggerService } from '../../../testing/logger.service';
 
 describe('AudiobookListComponent', () => {
@@ -17,7 +19,10 @@ describe('AudiobookListComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      declarations: [AudiobookListComponent],
+      declarations: [
+        AudiobookListComponent,
+        AudiobookHttpErrorComponent
+      ],
       providers: [
         AudiobookService,
         { provide: LoggerService, useClass: MockLoggerService }

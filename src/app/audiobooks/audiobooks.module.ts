@@ -7,12 +7,14 @@ import { AudiobooksRoutingModule } from './audiobooks-routing.module';
 import { AudiobooksComponent } from './audiobooks.component';
 import { AudiobookDetailComponent } from './audiobook-detail/audiobook-detail.component';
 import { AudiobookListComponent } from './audiobook-list/audiobook-list.component';
+import { AudiobookHttpErrorComponent } from './audiobook-http-error/audiobook-http-error.component';
 
 @NgModule({
   declarations: [
     AudiobooksComponent,
     AudiobookDetailComponent,
-    AudiobookListComponent
+    AudiobookListComponent,
+    AudiobookHttpErrorComponent
   ],
   imports: [
     CommonModule,

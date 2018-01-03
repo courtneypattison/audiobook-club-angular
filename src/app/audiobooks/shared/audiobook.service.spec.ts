@@ -3,7 +3,7 @@ import { HttpClientJsonpModule, HttpBackend, JsonpClientBackend } from '@angular
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { Audiobook } from './audiobook.model';
-import { AudiobookService } from './audiobook.service';
+import { AudiobookService, httpErrorIdentifier } from './audiobook.service';
 import { LoggerService } from '../../core/logger/logger.service';
 import { MockLoggerService } from '../../../testing/logger.service';
 import {
@@ -19,6 +19,7 @@ import {
 describe('AudiobookService', () => {
   let audiobookService: AudiobookService;
   let httpMock: HttpTestingController;
+  const mockError = new ErrorEvent('test error');
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,6 +52,15 @@ describe('AudiobookService', () => {
       expect(req.request.method).toBe('JSONP');
       req.flush(mockIdentifiers);
     });
+
+    it(`should return an Observable<Audiobook[]> with the first identifier being '${httpErrorIdentifier}'`, () => {
+      audiobookService.getAudiobooks().subscribe(audiobooks => {
+        expect(audiobooks[0].identifier).toBe(httpErrorIdentifier);
+      });
+
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobooksUrl());
+      req.flush(mockError);
+    });
   });
 
   describe('#getAudiobookDetails', () => {
@@ -64,6 +74,17 @@ describe('AudiobookService', () => {
       const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
       expect(req.request.method).toBe('JSONP');
       req.flush(mockAudiobookDetails);
+    });
+
+    it(`should return an Observable<Audiobook> with the identifier '${httpErrorIdentifier}'`, () => {
+      const identifier = mockAudiobookDetails['metadata']['identifier'][0];
+
+      audiobookService.getAudiobookDetails(new Audiobook(identifier)).subscribe(audiobook => {
+        expect(audiobook.identifier).toEqual(httpErrorIdentifier);
+      });
+
+      const req = httpMock.expectOne(request => request.url === audiobookService.getAudiobookDetailsUrl(identifier));
+      req.flush(mockError);
     });
 
     it('should return an Observable<Audiobook> without details', () => {

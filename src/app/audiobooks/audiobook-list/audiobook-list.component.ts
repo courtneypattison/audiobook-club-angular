@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Audiobook } from '../shared/audiobook.model';
-import { AudiobookService, httpErrorIdentifier, httpErrorContents } from '../shared/audiobook.service';
+import { AudiobookService, httpErrorIdentifier } from '../shared/audiobook.service';
 
 @Component({
   selector: 'ac-audiobook-list',
