@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
+import { convertToParamMap } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-
-import { Audiobook } from '../app/audiobooks/shared/audiobook.model';
+export const mockIdentifier = 'art_of_war';
 
 @Injectable()
 export class MockActivatedRoute {
-  getAudiobooks(): Observable<Audiobook[]> {
-    return of([new Audiobook('mock-identifier')]);
-  }
-
-  getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
-    return of(audiobook);
+  get snapshot() {
+    return { paramMap: convertToParamMap({ identifier: mockIdentifier}) };
   }
 }

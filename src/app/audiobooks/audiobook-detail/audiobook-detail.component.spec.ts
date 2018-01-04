@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,32 +7,32 @@ import { AudiobookHttpErrorComponent } from '../audiobook-http-error/audiobook-h
 
 import { AudiobookService } from '../shared/audiobook.service';
 import { LoggerService } from '../../core/logger/logger.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+
 import { MockLoggerService } from '../../../testing/mock-logger.service';
+import { MockAudiobookService } from '../../../testing/mock-audiobook.service';
+import { MockActivatedRoute, mockIdentifier } from '../../../testing/mock-activated-route.service';
+
+import { of } from 'rxjs/observable/of';
 
 describe('AudiobookDetailComponent', () => {
   let component: AudiobookDetailComponent;
   let fixture: ComponentFixture<AudiobookDetailComponent>;
-  @Component({template: ''})
-  class BlankComponent {
-  }
-  const mockPath = 'path';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(
-          [{path: mockPath, component: BlankComponent}]
-        )
+        RouterTestingModule
       ],
       declarations: [
         AudiobookDetailComponent,
-        AudiobookHttpErrorComponent,
-        BlankComponent
+        AudiobookHttpErrorComponent
       ],
       providers: [
-        AudiobookService,
-        { provide: LoggerService, useClass: MockLoggerService }
+        { provide: AudiobookService, useClass: MockAudiobookService },
+        { provide: LoggerService, useClass: MockLoggerService },
+        { provide: ActivatedRoute, useClass: MockActivatedRoute }
       ]
     })
     .compileComponents();
@@ -52,7 +51,7 @@ describe('AudiobookDetailComponent', () => {
   describe('#getAudiobook', () => {
     it('should assign an audiobook to this.audiobook', () => {
       component.getAudiobook();
-      // expect(component.audiobook.identifier).toEqual(mockPath);
+      expect(component.audiobook.identifier).toEqual(mockIdentifier);
     });
   });
 });
