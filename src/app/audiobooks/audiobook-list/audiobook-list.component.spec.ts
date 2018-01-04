@@ -7,7 +7,7 @@ import { AudiobookHttpErrorComponent } from '../audiobook-http-error/audiobook-h
 
 import { AudiobookService } from '../shared/audiobook.service';
 import { LoggerService } from '../../core/logger/logger.service';
-import { MockLoggerService } from '../../../testing/logger.service';
+import { MockLoggerService } from '../../../testing/mock-logger.service';
 
 describe('AudiobookListComponent', () => {
   let component: AudiobookListComponent;
