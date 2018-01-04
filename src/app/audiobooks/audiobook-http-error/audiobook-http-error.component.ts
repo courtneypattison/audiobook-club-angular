@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './audiobook-http-error.component.html',
   styleUrls: ['./audiobook-http-error.component.css']
 })
-export class AudiobookHttpErrorComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class AudiobookHttpErrorComponent {
 
 }
