@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Audiobook } from '../shared/audiobook.model';
-import { AudiobookService, httpErrorIdentifier } from '../shared/audiobook.service';
+import { AudiobookService } from '../shared/audiobook.service';
 
 @Component({
   selector: 'ac-audiobook-detail',
@@ -26,12 +26,9 @@ export class AudiobookDetailComponent implements OnInit {
   getAudiobook() {
     const identifier = this.route.snapshot.paramMap.get('identifier');
     this.audiobookService.getAudiobookDetails(new Audiobook(identifier))
-      .subscribe(audiobook => {
-        if (audiobook.identifier === httpErrorIdentifier) {
-          this.httpError = true;
-        } else {
-          this.audiobook = audiobook;
-        }
-      });
+      .subscribe(
+        audiobook => this.audiobook = audiobook,
+        error => this.httpError = true
+    );
   }
 }

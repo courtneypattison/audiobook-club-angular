@@ -1,3 +1,5 @@
+export const mockIdentifier = 'art_of_war_librivox';
+
 export const mockIdentifiers = {
     'response': {
       'docs': [

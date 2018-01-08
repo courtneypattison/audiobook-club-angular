@@ -5,9 +5,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AudiobookListComponent } from './audiobook-list.component';
 import { AudiobookHttpErrorComponent } from '../audiobook-http-error/audiobook-http-error.component';
 
+import { ActivatedRoute } from '@angular/router';
 import { AudiobookService } from '../shared/audiobook.service';
 import { LoggerService } from '../../core/logger/logger.service';
+
+import { MockActivatedRoute } from '../../../testing/mock-activated-route.service';
+import { MockAudiobookService } from '../../../testing/mock-audiobook.service';
 import { MockLoggerService } from '../../../testing/mock-logger.service';
+import { mockIdentifier } from '../../../testing/mock-audiobooks';
 
 describe('AudiobookListComponent', () => {
   let component: AudiobookListComponent;
@@ -24,8 +29,9 @@ describe('AudiobookListComponent', () => {
         AudiobookHttpErrorComponent
       ],
       providers: [
-        AudiobookService,
-        { provide: LoggerService, useClass: MockLoggerService }
+        { provide: AudiobookService, useClass: MockAudiobookService },
+        { provide: LoggerService, useClass: MockLoggerService },
+        { provide: ActivatedRoute, useClass: MockActivatedRoute }
       ]
     })
     .compileComponents();
@@ -39,5 +45,12 @@ describe('AudiobookListComponent', () => {
 
   it('should create audiobook list', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('#getAudiobook', () => {
+    it('should assign an audiobook to this.audiobook', () => {
+      component.getAudiobooks();
+      expect(component.audiobooks[0].identifier).toEqual(mockIdentifier);
+    });
   });
 });

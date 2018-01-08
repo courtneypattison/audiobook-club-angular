@@ -3,15 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
 
 import { Audiobook } from './audiobook.model';
 import { Chapter } from './chapter.model';
 import { LoggerService } from '../../core/logger/logger.service';
-
-export const httpErrorIdentifier = 'http-error';
 
 @Injectable()
 export class AudiobookService {
@@ -60,7 +58,10 @@ export class AudiobookService {
 
         return audiobooks;
       })
-      .catch((error: HttpErrorResponse) => of([this.handleHttpError(error)]));
+      .catch((error: HttpErrorResponse) => {
+        this.logError(error);
+        return Observable.throw(error);
+      });
   }
 
   getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
@@ -83,15 +84,16 @@ export class AudiobookService {
 
         return audiobook;
       })
-      .catch((error: HttpErrorResponse) => of(this.handleHttpError(error)));
+      .catch((error: HttpErrorResponse) => {
+        this.logError(error);
+        return Observable.throw(error);
+      });
   }
 
-  // Error Handling
+  // Error Logging
 
-  private handleHttpError(error: HttpErrorResponse): Audiobook {
+  private logError(error: HttpErrorResponse) {
     this.logger.error(`Backend returned code ${error.status}, body was: ${error.message}`);
-
-    return new Audiobook(httpErrorIdentifier);
   }
 
   // JSON Parsers

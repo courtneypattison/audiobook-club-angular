@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { convertToParamMap } from '@angular/router';
 
-export const mockIdentifier = 'art_of_war';
+import { mockIdentifier } from '../testing/mock-audiobooks';
 
 @Injectable()
 export class MockActivatedRoute {

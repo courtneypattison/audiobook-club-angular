@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Audiobook } from '../shared/audiobook.model';
-import { AudiobookService, httpErrorIdentifier } from '../shared/audiobook.service';
+import { AudiobookService } from '../shared/audiobook.service';
 
 @Component({
   selector: 'ac-audiobook-list',
@@ -19,24 +19,20 @@ export class AudiobookListComponent implements OnInit {
   }
 
   getAudiobooks() {
-    this.audiobookService.getAudiobooks().subscribe(audiobooks => {
-      this.audiobooks = audiobooks;
-      if (this.audiobooks[0].identifier === httpErrorIdentifier) {
-        this.httpError = true;
-        return;
-      }
+    this.audiobookService.getAudiobooks().subscribe(
+      audiobooks => {
+        this.audiobooks = audiobooks;
 
-      for (let i = 0; i < this.audiobooks.length; i++) {
-        this.audiobookService
-          .getAudiobookDetails(this.audiobooks[i])
-          .subscribe(audiobook => {
-            if (audiobook.identifier === httpErrorIdentifier) {
-              this.httpError = true;
-            } else {
-              this.audiobooks[i] = audiobook;
-            }
-          });
-      }
-    });
+        for (let i = 0; i < this.audiobooks.length; i++) {
+          this.audiobookService
+            .getAudiobookDetails(this.audiobooks[i])
+            .subscribe(
+              audiobook => this.audiobooks[i] = audiobook,
+              error => this.httpError = true
+          );
+        }
+      },
+      error => this.httpError = true
+    );
   }
 }

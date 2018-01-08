@@ -5,10 +5,12 @@ import { of } from 'rxjs/observable/of';
 
 import { Audiobook } from '../app/audiobooks/shared/audiobook.model';
 
+import { mockIdentifier } from './mock-audiobooks';
+
 @Injectable()
 export class MockAudiobookService {
   getAudiobooks(): Observable<Audiobook[]> {
-    return of([new Audiobook('mock-identifier')]);
+    return of([new Audiobook(mockIdentifier)]);
   }
 
   getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
