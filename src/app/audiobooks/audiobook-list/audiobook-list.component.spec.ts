@@ -14,7 +14,6 @@ import { AudiobookService } from '../shared/audiobook.service';
 import { LoggerService } from '../../core/logger/logger.service';
 
 import { MockActivatedRoute } from '../../../testing/mock-activated-route.service';
-import { MockAudiobookService } from '../../../testing/mock-audiobook.service';
 import { MockLoggerService } from '../../../testing/mock-logger.service';
 import { mockIdentifier, mockIdentifiers } from '../../../testing/mock-audiobooks';
 
