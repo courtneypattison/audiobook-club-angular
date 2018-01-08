@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 import { Audiobook } from '../shared/audiobook.model';
@@ -33,7 +34,7 @@ describe('AudiobookDetailComponent', () => {
         AudiobookHttpErrorComponent
       ],
       providers: [
-        { provide: AudiobookService, useClass: MockAudiobookService },
+        AudiobookService,
         { provide: LoggerService, useClass: MockLoggerService },
         { provide: ActivatedRoute, useClass: MockActivatedRoute }
       ]
@@ -54,13 +55,15 @@ describe('AudiobookDetailComponent', () => {
 
   describe('#getAudiobook', () => {
     it('should assign an audiobook to this.audiobook', () => {
+      spyOn(service, 'getAudiobookDetails').and.returnValue(of(new Audiobook(mockIdentifier)));
       component.getAudiobook();
       expect(component.audiobook.identifier).toEqual(mockIdentifier);
     });
 
-    it('should assign an audiobook to this.audiobook', () => {
+    it('should set this.httpError to true', () => {
+      spyOn(service, 'getAudiobookDetails').and.returnValue(Observable.throw(new ErrorEvent('test error')));
       component.getAudiobook();
-      // TODO
+      expect(component.httpError).toBeTruthy();
     });
   });
 });
