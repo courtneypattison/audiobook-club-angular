@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of, throwError } from 'rxjs';
 
 import { Audiobook } from '../shared/audiobook.model';
 import { AudiobookDetailComponent } from './audiobook-detail.component';
@@ -57,7 +56,7 @@ describe('AudiobookDetailComponent', () => {
     });
 
     it('should set this.httpError to true', () => {
-      spyOn(service, 'getAudiobookDetails').and.returnValue(Observable.throw(new ErrorEvent('test error')));
+      spyOn(service, 'getAudiobookDetails').and.returnValue(throwError(new ErrorEvent('test error')));
       component.getAudiobook();
       expect(component.httpError).toBeTruthy();
     });

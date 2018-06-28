@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of, throwError } from 'rxjs';
 
 import { Audiobook } from '../shared/audiobook.model';
 import { AudiobookListComponent } from './audiobook-list.component';
@@ -57,7 +56,7 @@ describe('AudiobookListComponent', () => {
     });
 
     it('should set this.httpError to true because cannot get audiobooks', () => {
-      spyOn(service, 'getAudiobooks').and.returnValue(Observable.throw(new ErrorEvent('test error')));
+      spyOn(service, 'getAudiobooks').and.returnValue(throwError(new ErrorEvent('test error')));
       component.getAudiobooks();
       expect(component.httpError).toBeTruthy();
     });
@@ -71,7 +70,7 @@ describe('AudiobookListComponent', () => {
 
     it('should set this.httpError to true because cannot get audiobook details', () => {
       spyOn(service, 'getAudiobooks').and.returnValue(of(mockIdentifiers.response.docs));
-      spyOn(service, 'getAudiobookDetails').and.returnValue(Observable.throw(new ErrorEvent('test error')));
+      spyOn(service, 'getAudiobookDetails').and.returnValue(throwError(new ErrorEvent('test error')));
       component.getAudiobooks();
       expect(component.httpError).toBeTruthy();
     });

@@ -1,11 +1,13 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {map, catchError} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/throw';
+
+
 
 import { Audiobook } from './audiobook.model';
 import { Chapter } from './chapter.model';
@@ -47,8 +49,8 @@ export class AudiobookService {
 
     this.logger.log('Getting audiobooks from', audiobooksUrl);
     return this.http
-      .jsonp(audiobooksUrl, 'callback')
-      .map((json: any) => {
+      .jsonp(audiobooksUrl, 'callback').pipe(
+      map((json: any) => {
         const audiobooks: Audiobook[] = [];
         const identifiers = json.response.docs;
 
@@ -57,11 +59,11 @@ export class AudiobookService {
         }
 
         return audiobooks;
-      })
-      .catch((error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.logError(error);
-        return Observable.throw(error);
-      });
+        return observableThrowError(error);
+      }), );
   }
 
   getAudiobookDetails(audiobook: Audiobook): Observable<Audiobook> {
@@ -69,8 +71,8 @@ export class AudiobookService {
 
     this.logger.log('Getting audiobook details from', audiobookUrl);
     return this.http
-      .jsonp(audiobookUrl, 'callback')
-      .map((response: any) => {
+      .jsonp(audiobookUrl, 'callback').pipe(
+      map((response: any) => {
         const { title, creator, description, subject, runtime } = response.metadata;
 
         audiobook.title = this.getTitle(title);
@@ -83,11 +85,11 @@ export class AudiobookService {
         audiobook.chapters = this.getChapters(response.files);
 
         return audiobook;
-      })
-      .catch((error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.logError(error);
-        return Observable.throw(error);
-      });
+        return observableThrowError(error);
+      }), );
   }
 
   // Error Logging
