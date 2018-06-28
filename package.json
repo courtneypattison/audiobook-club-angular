@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "test": "ng test",
     "test:coverage": "ng test --code-coverage",
-    "test:headless": "ng test --single-run --browsers ChromeHeadless --code-coverage --progress=false",
+    "test:headless": "ng test --browsers ChromeHeadless --code-coverage --progress=false --watch=false",
     "start": "ng serve",
     "webdriver:update": "yarn webdriver-manager update"
   },
