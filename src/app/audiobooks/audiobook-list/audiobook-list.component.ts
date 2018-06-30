@@ -11,6 +11,7 @@ import { AudiobookService } from '../shared/audiobook.service';
 export class AudiobookListComponent implements OnInit {
   audiobooks: Audiobook[] = [];
   httpError = false;
+  pageCount = 1;
 
   constructor(private audiobookService: AudiobookService) { }
 
@@ -19,13 +20,14 @@ export class AudiobookListComponent implements OnInit {
   }
 
   getAudiobooks() {
-    this.audiobookService.getAudiobooks().subscribe(
+    this.audiobookService.getAudiobooks(this.pageCount).subscribe(
       audiobooks => {
-        this.audiobooks = audiobooks;
+        const audiobooksLength = this.audiobooks.length;
+        for (let i = audiobooksLength; i < (audiobooksLength + audiobooks.length); i++) {
+          this.audiobooks[i] = audiobooks[i - audiobooksLength];
 
-        for (let i = 0; i < this.audiobooks.length; i++) {
           this.audiobookService
-            .getAudiobookDetails(this.audiobooks[i])
+            .getAudiobookDetails(audiobooks[i - audiobooksLength])
             .subscribe(
               audiobook => this.audiobooks[i] = audiobook,
               error => this.httpError = true
@@ -34,5 +36,10 @@ export class AudiobookListComponent implements OnInit {
       },
       error => this.httpError = true
     );
+  }
+
+  onScroll() {
+    this.pageCount++;
+    this.getAudiobooks();
   }
 }

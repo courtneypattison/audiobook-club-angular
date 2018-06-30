@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 import { AudiobooksRoutingModule } from './audiobooks-routing.module';
 
 import { AudiobooksComponent } from './audiobooks.component';
@@ -20,6 +22,7 @@ import { AudiobookHttpErrorComponent } from './audiobook-http-error/audiobook-ht
     CommonModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    InfiniteScrollModule,
     AudiobooksRoutingModule
   ]
 })

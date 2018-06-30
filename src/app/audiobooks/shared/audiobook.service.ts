@@ -21,14 +21,14 @@ export class AudiobookService {
 
   // Get URLs
 
-  getAudiobooksUrl(): string {
+  getAudiobooksUrl(pageCount: number): string {
     return this.baseURL
       + 'advancedsearch.php'
       + '?q=collection%3Alibrivoxaudio'
       + '&fl[]=identifier'
       + '&sort[]=downloads+desc'
-      + '&rows=10'
-      + '&page=1'
+      + '&rows=20'
+      + '&page=' + pageCount
       + '&output=json'
       + '&save=yes'
       + '&callback=callback';
@@ -44,8 +44,8 @@ export class AudiobookService {
 
   // HTTP Requests
 
-  getAudiobooks(): Observable<Audiobook[]> {
-    const audiobooksUrl = this.getAudiobooksUrl();
+  getAudiobooks(pageCount: number): Observable<Audiobook[]> {
+    const audiobooksUrl = this.getAudiobooksUrl(pageCount);
 
     this.logger.log('Getting audiobooks from', audiobooksUrl);
     return this.http
