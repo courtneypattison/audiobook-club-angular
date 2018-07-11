@@ -17,7 +17,9 @@ import { AudiobookService } from './audiobooks/shared/audiobook.service';
   declarations: [
     AppComponent
   ],
-  providers: [AudiobookService],
+  providers: [
+    AudiobookService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
