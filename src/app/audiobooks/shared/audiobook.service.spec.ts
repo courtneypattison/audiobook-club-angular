@@ -43,16 +43,16 @@ describe('AudiobookService', () => {
 
   describe('#getAudiobooks', () => {
     it('should return an Observable<Audiobook[]>', () => {
-      service.getAudiobooks(1).subscribe(audiobooks => {
+      service.getAudiobooks().subscribe(audiobooks => {
         expect(audiobooks.length).toBe(5);
         expect(audiobooks[0].identifier).toEqual(mockIdentifiers['response']['docs'][0]['identifier']);
       });
-      httpMock.expectOne(request => request.url === service.getAudiobooksUrl(1)).flush(mockIdentifiers);
+      httpMock.expectOne(request => request.url === service.getAudiobooksUrl()).flush(mockIdentifiers);
     });
 
     it(`should return an Observable<HttpErrorResponse>`, () => {
-      service.getAudiobooks(1).subscribe(() => undefined, error => expect(error.error).toBe(mockError));
-      httpMock.expectOne(request => request.url === service.getAudiobooksUrl(1)).error(mockError);
+      service.getAudiobooks().subscribe(() => undefined, error => expect(error.error).toBe(mockError));
+      httpMock.expectOne(request => request.url === service.getAudiobooksUrl()).error(mockError);
     });
   });
 
